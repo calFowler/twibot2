@@ -1,0 +1,26 @@
+{
+  "name": "twibot",
+  "version": "1.0.0",
+  "description": "just a bot",
+  "main": "bot.js",
+  "scripts": {
+    "start": "node bot.js",
+    "test": "twibot"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/calfowler/twibot.git"
+  },
+  "keywords": [
+    "twibot"
+  ],
+  "author": "Cal Fowler",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/calfowler/twibot/issues"
+  },
+  "homepage": "https://github.com/calfowler/twibot#readme",
+  "dependencies": {
+    "twit": "^2.2.9"
+  }
+}
