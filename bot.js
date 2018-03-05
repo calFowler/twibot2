@@ -98,7 +98,7 @@ function ranDom (arrr) {
 };
 
 function ranSubject(){
-var subject = ['ski contest', 'analytics','liverpool', 'machine learning', 'red sox', 'nodejs', 'ski','#AI','golang','Celtics','skiing', 'CouchDB', 'bigdata'];
+var subject = ['ski contest', 'analytics','liverpool', 'machine learning', 'red sox', 'nodejs','deep learning','#AI','golang','Celtics','skiing', 'CouchDB', 'bigdata'];
 var index = Math.floor(Math.random()*subject.length);
 console.log(subject[index]);
 return subject[index];
