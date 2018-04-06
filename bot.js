@@ -9,8 +9,11 @@ var Twitter = new twit(config);
 
 // find latest tweet according the query 'q' in params
 var retweet = function() {
+
+    var subj = ranSubject();
+
     var params = {
-        q: ranSubject(),  // REQUIRED
+        q: subj,  // REQUIRED
         //result_type: 'recent',
         lang: 'en'
     }
@@ -31,6 +34,8 @@ var retweet = function() {
             }, function(err, response) {
                 if (response) {
                     console.log('Retweeted!!!');
+
+                    logData(subj,data.statuses[0].text,'retweet');
                 }
                 // if there was an error while tweeting
                 if (err) {
@@ -49,14 +54,16 @@ var retweet = function() {
 // grab & retweet as soon as program is running...
 retweet();
 // retweet in every 15 minutes
-setInterval(retweet, 500000);
+setInterval(retweet, 900000);
 
 // FAVORITE BOT====================
 
 // find a random tweet and 'favorite' it
 var favoriteTweet = function(){
+    var subj = ranSubject();
+
   var params = {
-      q: ranSubject(),  // REQUIRED
+      q: subj,  // REQUIRED
      // result_type: 'recent',
       lang: 'en'
   }
@@ -80,6 +87,7 @@ var favoriteTweet = function(){
         }
         else{
           console.log('FAVORITED... Success!!!');
+          logData(subj,data.statuses[0].text,'favorited');
         }
       });
     }
@@ -89,7 +97,7 @@ var favoriteTweet = function(){
 // grab & 'favorite' as soon as program is running...
 favoriteTweet();
 // 'favorite' a tweet in every 15 minutes
-setInterval(favoriteTweet, 500000);
+setInterval(favoriteTweet, 900000);
 
 // function to generate a random tweet tweet
 function ranDom (arrr) {
@@ -98,7 +106,7 @@ function ranDom (arrr) {
 };
 
 function ranSubject(){
-var subject = ['ski contest', 'analytics','liverpool', 'machine learning', 'red sox', 'nodejs','deep learning','#AI','golang','Celtics','skiing', 'CouchDB', 'bigdata'];
+var subject = ['ski contest', 'analytics','liverpool', 'machine learning','AI', 'red sox', 'nodejs','angular','#AI','golang','Celtics','skiing', 'CouchDB', 'bigdata','IOT'];
 var index = Math.floor(Math.random()*subject.length);
 console.log(subject[index]);
 return subject[index];
@@ -117,6 +125,8 @@ var result = str.match(patterns);
 
     return result.length;
 
+    
+
 
   } 
   else
@@ -127,6 +137,29 @@ var result = str.match(patterns);
 
 }
 
+
+function logData(randomTweet, subject, action)
+{
+
+ var couchbase = require('couchbase');
+ var cluster = new couchbase.Cluster('couchbase://127.0.0.1');
+ cluster.authenticate('twibot', 'twibot');
+ var bucket = cluster.openBucket('twibot'); 
+ var twitext = randomTweet.text;
+ var key = Math.floor(Math.random()).toString();
+
+bucket.insert(key, {sub: subject, text:twitext, act: action}, function(err, res){
+
+     if(err){
+          console.log('error inserting log');
+          console.log(err);
+        }
+        else{
+          console.log('written to logfile');
+        }
+});
+
+}
 
 
 
